@@ -1,0 +1,317 @@
+
+%\usepackage{charter}
+%\usepackage{calc}
+
+\usepackage{multirow}
+% \usepackage[cp1250]{inputenc}
+% \usepackage[T1]{fontenc}
+% \usepackage{calligra}
+\usepackage{layout}
+
+% AMS
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{siunitx}
+
+\usepackage{enumitem}
+
+\usepackage{bbm}
+
+\usepackage{url}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{verbatim}
+\usepackage{subcaption}
+
+\usepackage{natbib}
+
+\usepackage{apptools}
+\usepackage{thmtools}
+\usepackage{algorithm, algpseudocode}
+
+\usepackage[nice]{nicefrac}
+
+% paper specific macros
+\newcommand{\g}{{\color{red}g}}
+\newcommand{\h}{{\color{blue}h}}
+
+% general macros
+
+\newcommand{\norm}[1]{\left\| #1 \right\|}
+\newcommand{\bnorm}[1]{\left\| #1 \right\|_{\mB}}
+\newcommand{\sqnorm}[1]{\left\| #1 \right\|^2}
+\newcommand{\lin}[1]{\left\langle #1\right\rangle} % inner product
+\newcommand{\inp}[2]{\left\langle#1,#2\right\rangle} % inner product
+\newcommand{\binp}[2]{\left\langle#1,#2\right\rangle_{\mB}}
+
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brac}[1]{\left\{ #1 \right\}}
+
+
+% caligraphic
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cK}{\mathcal{K}}
+\newcommand{\cJ}{\mathcal{J}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cZ}{\mathcal{Z}}
+
+% bold matrices
+\newcommand{\mA}{\mathbf{A}}
+\newcommand{\mB}{\mathbf{B}}
+\newcommand{\mC}{\mathbf{C}}
+\newcommand{\mM}{\mathbf{M}}
+\newcommand{\mN}{\mathbf{N}}
+\newcommand{\mI}{\mathbf{I}}
+\newcommand{\mJ}{\mathbf{J}}
+\newcommand{\mL}{\mathbf{L}}
+\newcommand{\mD}{\mathbf{D}}
+\newcommand{\mO}{\mathbf{O}}
+\newcommand{\mH}{\mathbf{H}}
+\newcommand{\mP}{\mathbf{P}}
+\newcommand{\mS}{\mathbf{S}}
+\newcommand{\mZ}{\mathbf{Z}}
+\newcommand{\mU}{\mathbf{U}}
+\newcommand{\mQ}{\mathbf{Q}}
+\newcommand{\mV}{\mathbf{V}}
+\newcommand{\mX}{\mathbf{X}}
+\newcommand{\mW}{\mathbf{W}}
+
+% bold vectors
+\newcommand{\ma}{\mathbf{a}}
+\newcommand{\mb}{\mathbf{b}}
+\newcommand{\mc}{\mathbf{c}}
+\newcommand{\md}{\mathbf{d}}
+\newcommand{\mx}{\mathbf{x}}
+\newcommand{\my}{\mathbf{y}}
+\newcommand{\mz}{\mathbf{z}}
+\newcommand{\mw}{\mathbf{w}}
+\newcommand{\mzero}{\mathbf{0}}
+
+
+\newcommand{\proj}{\textnormal{Proj}^{\perp}}
+\newcommand{\trbar}{\overline{\textnormal{Tr}}}
+
+\newcommand{\prox}{\textnormal{prox}}
+\newcommand{\teqp}{t_\textnormal{prox}}
+\newcommand{\Teq}{t^*}
+\newcommand{\tprox}{t^{\prox}}
+
+\newcommand{\flr}[1]{\left\lfloor #1\right\rfloor} 
+\newcommand{\ceil}[1]{\left\lceil #1\right\rceil} 
+
+\newcommand{\hf}{\hat{f}}
+\newcommand{\bprox}{\textnormal{brox}_f^t}
+
+% Some duplicate notations on prox and the envelope function
+\newcommand{\rbrac}[1]{\left(#1\right)}
+\newcommand{\sbrac}[1]{\left[#1\right]}
+\newcommand{\cbrac}[1]{\left\{#1\right\}}
+\newcommand{\BProx}{\textnormal{brox}}
+\newcommand{\BProxSub}[3]{\textnormal{{brox}}^{#1}_{#2}\left(#3\right)}
+\newcommand{\ProxSub}[2]{\textnormal{{prox}_{#1}}\left(#2\right)}
+\newcommand{\MoreauSub}[3]{{M}^{#1}_{#2}\rbrac{#3}}
+\newcommand{\BMoreauSub}[3]{{N}^{#1}_{#2}\rbrac{#3}}
+\newcommand{\BMoreau}{{N}}
+\newcommand{\inner}[2]{\left\langle #1, #2 \right\rangle}
+\newcommand{\dist}[2]{\textnormal{dist}\rbrac{#1, #2}}
+\newcommand{\breg}[3]{D_{#1}\rbrac{#2, #3}}
+\newcommand{\cmin}[1]{c^{\min}_t\rbrac{x_{#1}}}
+\newcommand{\cmax}[1]{c^{\max}_t\rbrac{x_{#1}}}
+\newcommand{\BpproxSub}[3]{\textnormal{{bprox}}^{#1}_{#2}\left(#3\right)}
+\newcommand{\Bpprox}{\textnormal{bprox}}
+\newcommand{\Sprox}{\textnormal{{Sprox}}}
+\newcommand{\SproxSub}[4]{\textnormal{{Sprox}}^{#1}_{#2, #3}\rbrac{#4}}
+
+
+\newcommand{\supp}{\textnormal{supp}}
+\newcommand{\prog}{\textnormal{prog}}
+
+\newcommand{\grad}{\nabla}
+\newcommand{\sgrad}{\widehat{\nabla}}
+
+% strange stuff
+\newcommand{\hotidea}{{\color{red}\bf HOT IDEA: }}
+\newcommand{\done}{{\color{blue}\bf DONE: }}
+\newcommand{\del}[1]{}
+\let\la=\langle
+\let\ra=\rangle
+
+% basic macros
+\newcommand{\R}{\mathbb{R}} % reals
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\I}{\mathbb{I}}
+\newcommand{\U}{\mathbb{U}}
+\newcommand{\PermComp}{\U\mathbb{P}}
+
+\newcommand{\st}{\;:\;} % such that
+\newcommand{\eqdef}{\stackrel{\text{def}}{=}}
+% \newcommand{\eqdef}{:=} %\vcentcolon
+
+
+\newcommand{\clip}[1]{{\rm {\color{mydarkred}clip}_{\tau}}\left(#1\right)}
+
+
+\newcommand{\nnz}[1]{{\color{red}\|#1\|_0}}
+
+% sets
+\DeclareMathOperator{\card}{card}         % cardinality of a set
+\DeclareMathOperator{\diam}{diam}        % diameter of a set
+\DeclareMathOperator{\vol}{vol}               % volume of a set
+
+
+\newcommand{\Prob}[1]{{\mathbf{Prob}}\left(#1\right)} % probability
+\newcommand{\ProbCond}[2]{\mathbf{Prob}\left(\left.#1\right\vert#2\right)}
+
+% statistics
+\newcommand{\Exp}[1]{{\mathbb{E}}\left[#1\right]}
+\newcommand{\Expxi}[1]{{\mathbb{E}_{\xi}}\left[#1\right]}
+\newcommand{\ExpCond}[2]{{\mathbb{E}}\left[\left.#1\right\vert#2\right]}
+\newcommand{\ExpSub}[2]{{\mathbb{E}}_{#1}\left[#2\right]}
+\newcommand{\ExpSubCond}[3]{{\mathbb{E}}_{#1}\left[#2\vert#3\right]}
+\DeclareMathOperator{\Cov}{Cov}         % covariance
+\DeclareMathOperator{\Var}{Var}         % variance
+\DeclareMathOperator{\Corr}{Corr}       % correlation
+
+% functions and operators
+\DeclareMathOperator{\signum}{sign}     % signum/sign of a scalar
+\DeclareMathOperator{\dom}{dom}         % domain
+\DeclareMathOperator{\epi}{epi}         % epigraph
+\DeclareMathOperator{\Ker}{null}        % nullspace/kernel
+\DeclareMathOperator{\nullspace}{null}  % nullpsace
+\DeclareMathOperator{\range}{range}     % range
+\DeclareMathOperator{\Image}{Im}        % image
+
+% topology
+\DeclareMathOperator{\interior}{int}    % interior
+\DeclareMathOperator{\ri}{rint}         % relative interior
+\DeclareMathOperator{\rint}{rint}       % relative interior
+\DeclareMathOperator{\bdry}{bdry}       % boundary
+\DeclareMathOperator{\cl}{cl}           % closure
+
+% vectors, matrices
+\DeclareMathOperator{\linspan}{span}
+\DeclareMathOperator{\linspace}{linspace}
+\DeclareMathOperator{\cone}{cone}
+
+\DeclareMathOperator{\tr}{tr}           % trace
+\DeclareMathOperator{\rank}{rank}       % rank
+\DeclareMathOperator{\conv}{conv}       % convex hull
+\DeclareMathOperator{\Diag}{Diag}       % Diag(v) = diagonal matrix with v_i on the diagonal
+\DeclareMathOperator{\diag}{diag}       % diag(D) = the diagonal vector of matrix D
+\DeclareMathOperator{\Arg}{Arg}         % Argument
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+%\renewcommand{\qedsymbol}{\ding{114}}
+
+
+
+
+%%%%%%%%
+
+% TODO: Fix here fonts
+\newcommand{\Sample}{\mathcal{S}}
+%\newcommand{\norm}[1]{\left\lVert#1\right\rVert_2}
+\newcommand{\B}{\mathbb{B}}
+
+
+\usepackage{tcolorbox}
+\usepackage{pifont}
+\definecolor{mydarkgreen}{RGB}{39,130,67}
+\definecolor{mydarkred}{RGB}{192,47,25}
+\definecolor{mydarkorange}{RGB}{39,130,67}
+\newcommand{\green}{\color{mydarkgreen}}
+\newcommand{\red}{\color{mydarkred}}
+\newcommand{\cmark}{\green\ding{51}}%
+\newcommand{\xmark}{\red\ding{55}}%
+\newcommand{\orange}{\color{mydarkorange}}
+
+\newcommand{\algname}[1]{{\green \sf #1}}
+\newcommand{\algnamesmall}[1]{{\green\small \sf #1}}
+\newcommand{\algnamelarge}[1]{{\green\large \sf #1}} % for subsections
+\newcommand{\algnameLarge}[1]{{\green\Large \sf #1}} % for sections
+
+\newcommand{\tablescriptsize}[1]{{\scriptsize #1}}
+\newcommand{\tablesmall}[1]{{\small #1}}
+
+
+
+%%%%%%%%
+
+\newtheorem{assumption}{Assumption}
+\newtheorem{lemma}{Lemma}
+\newtheorem{algorithms}{Algorithm}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\newtheorem{fact}{Fact}
+
+\theoremstyle{plain}
+\newtheorem{prop}[theorem]{Proposition}
+\newtheorem{cor}[theorem]{Corollary}
+\newtheorem{lem}[theorem]{Lemma}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{remark}[theorem]{Remark}
+
+\theoremstyle{definition}
+\newtheorem{exercise}[theorem]{Exercise}
+\newtheorem{rem}[theorem]{Remark}
+\newtheorem{que}[theorem]{Question}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{problem}{Problem}
+
+% Hack that enables labeling of lines in algorithms
+\newcommand{\alglinelabel}{%
+  \addtocounter{ALC@line}{-1}% Reduce line counter by 1
+  \refstepcounter{ALC@line}% Increment line counter with reference capability
+  \label% Regular \label
+}
+
+% Code
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}

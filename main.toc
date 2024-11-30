@@ -1,0 +1,2 @@
+\contentsline {section}{\numberline {1}Augmented Lagrangian method}{1}{section.1}%
+\contentsline {section}{\numberline {2}Alternating direction method of multiplier}{3}{section.2}%

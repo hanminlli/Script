@@ -1,0 +1,150 @@
+\documentclass{article}
+
+\usepackage[hidelinks]{hyperref}
+\usepackage{url}
+\usepackage{todonotes}
+\usepackage{setspace}
+\usepackage{tcolorbox}
+
+
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=2cm,right=2cm,marginparwidth=1.75cm]{geometry}
+
+\include{macros}
+\newcommand{\cI}{{\cal I}}
+
+
+\usepackage{tikz}
+\usetikzlibrary{tikzmark,decorations.pathreplacing}
+
+\hypersetup{
+  colorlinks   = true, %Colours links instead of ugly boxes
+  urlcolor     = blue, %Colour for external hyperlinks
+  linkcolor    = {red!75!black}, %Colour of internal links
+  citecolor   = {blue!50!black} %Colour of citations
+}
+
+\allowdisplaybreaks
+
+\usepackage{cleveref}
+\Crefname{assumption}{Assumption}{Assumptions}  % capitalized references
+\Crefname{remark}{Remark}{Remarks}  % capitalized references
+
+\title{Conclusions}
+\author{Hanmin Li}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\section{Augmented Lagrangian method}
+This note serves as an auxiliary reference to \cite[Chapter 15.1]{beck2017first}.
+
+\begin{tcolorbox}[colback=blue!10, colframe=black, boxrule=0.5pt, width=\textwidth]
+    In one sentence, the Augmented Lagrangian method is proximal point method on the dual objective. 
+    Notice that in this case, we have strong duality.
+\end{tcolorbox}
+
+Consider the problem of 
+\begin{align}
+    \label{eq:objective}
+    H_{opt} = \min \cbrac{H\rbrac{\mx, \mz} = h_1\rbrac{\mx} + h_2\rbrac{\mz}: \mA \mx + \mB \mz = \mc},
+\end{align}
+where $\mA \in \R^{m \times n}$, $\mB \in \R^{m \times p}$ and $\mc \in \R^m$.
+We assume for now that $h_1, h_2$ are proper, closed and convex.
+
+Constructing Lagrangian, we get 
+\begin{align*}
+    L\rbrac{\mx, \mz; \my} = h_1\rbrac{\mx} + h_2\rbrac{\mz} + \inner{\my}{\mA \mx + \mB \mz - \mc},
+\end{align*}
+where $\my$ is the Lagrangian multiplier.
+Minimizing the Lagrangian, we get the Lagrangian dual function, 
+\begin{align*}
+    q\rbrac{\my} &= \inf_{\mx \in \R^n, \mz \in \R^p} \cbrac{h_1\rbrac{\mx} + h_2\rbrac{\mz} + \inner{\my}{\mA\mx + \mB\mz - \mc}} \\
+    &= -\inner{\my}{\mc} + \inf_{\mx \in \R^n}\cbrac{\inner{\my}{\mA \mx} + h_1\rbrac{\mx}} + \inf_{\mz \in \R^p}\cbrac{\inner{\my}{\mB\mz} + h_2\rbrac{\mz}} \\
+    &= -\inner{\my}{\mc} - \sup_{\mx \in \R^d}\cbrac{- \inner{\my}{\mA \mx} - h_1\rbrac{\mx}} - \sup_{\mz \in \R^p}\cbrac{-\inner{\my}{\mB \mz} - h_2\rbrac{\mz}} \\
+    &= -\inner{\my}{\mc} - h_1^*\rbrac{-\mA^\top \my} - h_2^*\rbrac{-\mB^\top \my}.
+\end{align*}
+The dual problem is thus given by 
+\begin{align*}
+    q_{opt} = \max_{\my \in \R^d} \cbrac{- h_1^*\rbrac{-\mA^\top \my} - h_2^*\rbrac{-\mB^\top \my} - \inner{\my}{\mc}}.
+\end{align*}
+which is the same as 
+\begin{align*}
+    \min_{\my \in \R^d} \cbrac{h_1^*\rbrac{-\mA^\top \my} + h_2^*\rbrac{-\mB^\top \my} + \inner{\my}{\mc}}.
+\end{align*}
+Notice that since $h_1$ and $h_2$ are proper, closed and convex, by \cite[Theorem 4.3 and 4.5]{beck2017first}, we know $h_1^*$ and $h_2^*$ are proper, closed and convex.
+Employing \algname{PPM}(Proximal Point Method), we get 
+\begin{align*}
+    \my_{k+1} = \arg\min_{\mz \in \R^d}\cbrac{h_1^*\rbrac{-\mA^\top\mz} + h_2^\star\rbrac{-\mB^\top \mz} + \inner{\mz}{\mc} + \frac{1}{2\rho}\norm{\mz - \my_k}^2}.
+\end{align*}
+Using \cite[Theorem 3.40]{beck2017first}, this implies 
+\begin{align}
+    \label{eq:conv:cond:1}
+    & \mzero \in \partial\rbrac{ h_1^\star\rbrac{-\mA^\top \my_{k+1}} } + \partial \rbrac{h_2^*\rbrac{-\mB^\top \my_{k+1}}} + \mc + \frac{1}{\rho}\rbrac{\my_{k+1} - \my_k} \notag \\
+    \Leftrightarrow \quad & \mzero \in -\mA \partial h_1^\star\rbrac{-\mA^\top \my_{k+1}} - \mB \partial h_2^*\rbrac{-\mB^\top \my_{k+1}} + \mc + \frac{1}{\rho}\rbrac{\my_{k+1} - \my_k}.
+\end{align}
+Now the problem comes down to the subdifferential of $h_1^*$ and $h_2^*$, using \cite[Corollary 4.21]{beck2017first}, we have 
+\begin{align*}
+    & \partial h_1^\star\rbrac{-\mA^\top \my_{k+1}} = \argmax_{\mx \in \R^n}\rbrac{\inner{-\mA^\top \my_{k+1}}{\mx} - h_1\rbrac{\mx}} = \argmin_{\mx \in \R^n}\rbrac{\inner{\mA^\top \my_{k+1}}{\mx} + h_1\rbrac{\mx}} \eqdef \cX_{k+1}, \\
+    & \partial h_2^*\rbrac{-\mB^\top \my_{k+1}} = \argmax_{\mz \in \R^p}\rbrac{\inner{-\mB^\top \my_{k+1}}{\mz} - h_2\rbrac{\mz}} = \argmin_{\mz \in \R^p}\rbrac{\inner{\mB^\top \my_{k+1}}{\mz} + h_2\rbrac{\mz}} \eqdef \cZ_{k+1}.
+\end{align*}
+As a result, $y_{k+1}$ satisfies \cref{eq:conv:cond:1}, if and only if there exists some $\mx_{k+1} \in \cX_{k+1}$, $\mz_{k+1} \in \cZ_{k+1}$, such that 
+\begin{align}
+    \label{eq:update-rule}
+    \my_{k+1} = \my_k + \rho\rbrac{\mA\mx_{k+1} + \mB\mz_{k+1} - \mc}.
+\end{align}
+To summarize, we plug in the expression of $\my_{k+1}$ into the above condition, and obtain the following equivalent condition,
+\begin{eqnarray*}
+    \my_{k+1} &=& \my_k + \rho\rbrac{\mA\mx_{k+1} + \mB\mz_{k+1} - \mc} \\
+    \mx_{k+1} &\in& \argmin_{\mx \in \R^n}\rbrac{\inner{\mA^\top \rbrac{\my_k + \rho\rbrac{\mA\mx_{k+1} + \mB\mz_{k+1} - \mc}}}{\mx} + h_1\rbrac{\mx}} \\
+    \mz_{k+1} &\in& \argmin_{\mz \in \R^p}\rbrac{\inner{\mB^\top \rbrac{\my_k + \rho\rbrac{\mA\mx_{k+1} + \mB\mz_{k+1} - \mc}}}{\mz} + h_2\rbrac{\mz}}.
+\end{eqnarray*}
+Notice that we have assumed that $h_1\rbrac{x}$ and $h_2\rbrac{z}$ are proper, closed and convex, by Fermat's optimality condition, we have 
+\begin{eqnarray*}
+    \my_{k+1} &=& \my_k + \rho\rbrac{\mA\mx_{k+1} + \mB\mz_{k+1} - \mc} \\
+    \mzero &\in& \mA^\top \rbrac{\my_k + \rho\rbrac{\mA\mx_{k+1} + \mB\mz_{k+1} - \mc}} + \partial h_1\rbrac{\mx_{k+1}} \\
+    \mzero &\in& \mB^\top \rbrac{\my_k + \rho\rbrac{\mA\mx_{k+1} + \mB\mz_{k+1} - \mc}} + \partial h_2\rbrac{\mz_{k+1}},
+\end{eqnarray*}
+which is equivalent to the update rule (\ref{eq:update-rule}).
+Notice that $h_1$ and $h_2$ are separable, independently relying on $\mx$ and $\mz$, and the condition reminds us the proximal operator since $x_{k+1}$ and $z_{k+1}$ appears on both sides, which leads to the following condition:
+
+The pair $\rbrac{\mx_{k+1}, \mz_{k+1}}$ is the coordinate-wise minimum of the function via \cite[Lemma 14.7]{beck2017first}, 
+\begin{align*}
+    \tilde{H}\rbrac{\mx, \mz} := h_1\rbrac{\mx} + h_2\rbrac{\mz} + \frac{\rho}{2}\norm{\frac{1}{\rho}\cdot\my_k + \mA\mx + \mB\mz - \mc}^2.
+\end{align*}
+As a result we end up in the following Augmented Lagrangian Method (\algname{ALM}).
+\vspace{0.3cm}
+\begin{tcolorbox}[colback=gray!10, colframe=black, boxrule=0.5pt, width=\textwidth]
+    \textbf{The Augmented Lagrangian Method:}
+    \\
+    
+    \textbf{Initialization:} $\mathbf{\my}^0 \in \mathbb{R}^m, \, \rho > 0$.\\
+    \textbf{General step:} for any $k = 0, 1, 2, \ldots$ execute the following steps: (primal update) and (dual update):
+    \begin{eqnarray*}
+        \rbrac{\mx^{k+1}, \mz^{k+1}} &\in& \argmin_{\mx \in \mathbb{R}^n, \mz \in \mathbb{R}^p} \left\{ h_1(\mx) + h_2(\mz) + \frac{\rho}{2} \left\lVert \mA \mx + \mB \mz - \mc + \frac{1}{\rho} \my^k \right\rVert^2
+        \right\} \\ 
+        \my^{k+1} &=& \my^k + \rho \rbrac{\mA \mathbf{\mx}^{k+1} + \mB \mathbf{\mz}^{k+1} - \mathbf{\mc}}.
+    \end{eqnarray*}
+\end{tcolorbox}
+We therefore define the augmented Lagrangian for objective \ref{eq:objective} as 
+\begin{align*}
+    L_\rho\rbrac{\mx, \mz; \my} := h_1\rbrac{\mx} + h_2\rbrac{\mz} + \inner{\my}{\mA\mx + \mB\my - \mc} + \frac{\rho}{2}\norm{\mA\mx + \mB\my - \mc}^2.
+\end{align*}
+$L_0 = L$ is the Lagrangian function. 
+The primal step can be written as 
+\begin{align*}
+    \rbrac{\mx_{k+1}, \mz_{k+1}} \in \argmin_{x \in \R^n, z\in \R^p} L_\rho\rbrac{\mx, \mz, y_k}.
+\end{align*}
+This algorithm is not in general implementable, since the primal step is complicated.
+$\mx$ and $\mz$ ara coupled together.
+
+
+\section{Alternating direction method of multiplier}
+We therefore consider relax the exact minimization in the primal step by one iteration of the alternating minimization method, where we first do minimization with respect to $\mx$, then $\mz$.
+
+
+\bibliographystyle{plainnat} %abbrv
+\bibliography{bibliography}
+\end{document}
